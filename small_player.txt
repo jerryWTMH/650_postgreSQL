@@ -1,0 +1,7 @@
+1 1 1 Jerome Robinson 34 19 4 3 1.7 0.4
+2 1 0 Ky Bowman 29 14 5 3 1.2 0.1
+3 1 25 Jordan Chatman 25 9 2 1 0.6 0.2
+4 1 11 A.J. Turner 31 8 3 3 0.6 0.2
+5 1 21 Nik Popovic 14 6 4 0 0.1 0.3
+6 1 2 Connar Tava 25 6 5 2 0.7 0.3
+7 1 15 Mo Jeffers 20 6 6 1 0.4 0.5

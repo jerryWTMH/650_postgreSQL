@@ -2,5 +2,5 @@
 
 void exercise(connection *C)
 {
-
+    test_player(C);
 }

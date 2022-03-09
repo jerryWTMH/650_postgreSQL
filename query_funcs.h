@@ -34,4 +34,6 @@ void query4(connection *C, string team_state, string team_color);
 
 void query5(connection *C, int num_wins);
 
+void test_player(connection *C);
+
 #endif //_QUERY_FUNCS_
