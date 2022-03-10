@@ -21,7 +21,7 @@ void loadTables(string & sql, string filename, connection *C){
     while(getline(ifs, curr_line)){
       sql.append(curr_line);
     }
-    cout << "sql would be like: " << sql << endl;
+    // cout << "sql would be like: " << sql << endl;
     work W(*C);
     W.exec(sql);
     W.commit();
@@ -154,11 +154,13 @@ int main (int argc, char *argv[])
 
   //TODO: create PLAYER, TEAM, STATE, and COLOR tables in the ACC_BBALL database
   //      load each table with rows from the provided source txt files
-
-  parsePlayer("player.txt", C);
   parseColor("color.txt", C);
-  parseTeam("team.txt", C);
   parseState("state.txt", C);
+  parseTeam("team.txt", C);
+  parsePlayer("player.txt", C);
+  
+
+  // Start exercise!
   exercise(C);
   //Close database connection
   C->disconnect();

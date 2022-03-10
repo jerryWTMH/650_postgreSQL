@@ -43,7 +43,7 @@ void add_team(connection *C, string name, int state_id, int color_id, int wins, 
         string valueString = valueStream.str();
         sql = "INSERT INTO TEAM (NAME, STATE_ID, COLOR_ID, WINS, LOSSES) VALUES (";
         sql = sql + valueString + ");";
-        cout << "sql :" << sql << endl;
+        // cout << "sql :" << sql << endl;
         /* Execute SQL query */
         W.exec(sql);
         W.commit();
