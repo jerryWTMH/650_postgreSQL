@@ -54,7 +54,70 @@ void parsePlayer(string filename, connection *C){
     // show message:
     std::cout << "Error opening file";
   }
+}
 
+void parseTeam(string filename, connection *C){
+  ifstream ifs(filename);
+  if (ifs.is_open()) {
+    // print file:
+    string curr_line;
+    int team_id, state_id, color_id, wins, losses;
+    string name;
+    while(getline(ifs, curr_line)){
+      stringstream ss(curr_line);
+      ss >> team_id >> name >> state_id >> color_id >> wins >> losses;
+      add_team(C, name, state_id, color_id, wins, losses);
+    } 
+    ifs.close();
+    cout<< "The adding of all teams are finished!!!" << endl;
+  }
+  else {
+    // show message:
+    std::cout << "Error opening file";
+  }
+
+}
+
+void parseState(string filename, connection *C){
+  ifstream ifs(filename);
+  if (ifs.is_open()) {
+    // print file:
+    string curr_line;
+    int state_id;
+    string name;
+    while(getline(ifs, curr_line)){
+      stringstream ss(curr_line);
+      ss >> state_id >> name;
+      add_state(C, name);
+    } 
+    ifs.close();
+    cout<< "The adding of all states are finished!!!" << endl;
+  }
+  else {
+    // show message:
+    std::cout << "Error opening file";
+  }
+}
+
+void parseColor(string filename, connection *C){
+  ifstream ifs(filename);
+  if (ifs.is_open()) {
+    // print file:
+    string curr_line;
+    int color_id;
+    string name;
+    while(getline(ifs, curr_line)){
+      stringstream ss(curr_line);
+      ss >> color_id >> name;
+      add_color(C, name);
+    } 
+    ifs.close();
+    cout<< "The adding of all colors are finished!!!" << endl;
+  }
+  else {
+    // show message:
+    std::cout << "Error opening file";
+  }
 }
 
 int main (int argc, char *argv[]) 
@@ -74,10 +137,14 @@ int main (int argc, char *argv[])
       return 1;
     }
 
+    /*Drop the table first */
     dropTable(C, "PLAYER");
+    dropTable(C, "COLOR");
+    dropTable(C, "TEAM");
+    dropTable(C, "STATE");
     /* Create SQL statement */
-      string sql;
-      loadTables(sql, "tables.sql", C);
+    string sql;
+    loadTables(sql, "tables.sql", C);
 
   } catch (const std::exception &e){
     cerr << e.what() << std::endl;
@@ -89,6 +156,9 @@ int main (int argc, char *argv[])
   //      load each table with rows from the provided source txt files
 
   parsePlayer("player.txt", C);
+  parseColor("color.txt", C);
+  parseTeam("team.txt", C);
+  parseState("state.txt", C);
   exercise(C);
   //Close database connection
   C->disconnect();
