@@ -48,7 +48,7 @@ void parsePlayer(string filename, connection *C){
       add_player(C, team_id, uniform_num, first_name, last_name, mpg, ppg, rpg, apg, spg, bpg);
     } 
     ifs.close();
-    cout<< "The adding of all players are finished!!!" << endl;
+    // cout<< "The adding of all players are finished!!!" << endl;
   }
   else {
     // show message:
@@ -69,7 +69,7 @@ void parseTeam(string filename, connection *C){
       add_team(C, name, state_id, color_id, wins, losses);
     } 
     ifs.close();
-    cout<< "The adding of all teams are finished!!!" << endl;
+    // cout<< "The adding of all teams are finished!!!" << endl;
   }
   else {
     // show message:
@@ -91,7 +91,7 @@ void parseState(string filename, connection *C){
       add_state(C, name);
     } 
     ifs.close();
-    cout<< "The adding of all states are finished!!!" << endl;
+    // cout<< "The adding of all states are finished!!!" << endl;
   }
   else {
     // show message:
@@ -112,7 +112,7 @@ void parseColor(string filename, connection *C){
       add_color(C, name);
     } 
     ifs.close();
-    cout<< "The adding of all colors are finished!!!" << endl;
+    // cout<< "The adding of all colors are finished!!!" << endl;
   }
   else {
     // show message:

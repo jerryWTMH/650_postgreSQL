@@ -1,6 +1,7 @@
 #include "query_funcs.h"
 #include <iostream>
 #include <pqxx/pqxx> 
+#include <string.h>
 using namespace std;
 using namespace pqxx;
 
@@ -109,27 +110,139 @@ void query1(connection *C,
             int use_bpg, double min_bpg, double max_bpg
             )
 {
-    
+  work W(*C);
+  string sql;
+  sql = "SELECT * FROM PLAYER WHERE ";
+  int counter = 0;
+  if(use_mpg != 0){
+      sql = sql + "MPG >= " + to_string(min_mpg) + " AND MPG <= " + to_string(max_mpg);
+      counter++;
+  }
+  if(use_ppg != 0){
+      if(counter != 0){
+          sql = sql + " AND";
+      }
+      sql = sql + "PPG >= " + to_string(min_ppg) + " AND PPG <= " + to_string(max_ppg);
+      counter++;
+  }
+  if(use_rpg != 0){
+      if(counter != 0){
+          sql = sql + " AND";
+      }
+      sql = sql + "RPG >= " + to_string(min_rpg) + " AND RPG <= " + to_string(max_rpg);
+      counter++;
+  }
+  if(use_apg != 0){
+      if(counter != 0){
+          sql = sql + " AND";
+      }
+      sql = sql + "APG >= " + to_string(min_apg) + " AND APG <= " + to_string(max_apg);
+      counter++;
+  }
+  if(use_spg != 0){
+      if(counter != 0){
+          sql = sql + " AND";
+      }
+      sql = sql + "SPG >= " + to_string(min_spg) + " AND SPG <= " + to_string(max_spg);
+      counter++;
+  }
+  if(use_bpg != 0){
+      if(counter != 0){
+          sql = sql + " AND";
+      }
+      sql = sql + "BPG >= " + to_string(min_bpg) + " AND BPG <= " + to_string(max_bpg);
+      counter++;
+  }
+  sql = sql + ";";  
+  W.commit();
+  nontransaction N(*C);
+  result R(N.exec(sql));
+  cout << "PLAYER_ID TEAM_ID UNIFORM_NUM FIRST_NAME LAST_NAME MPG PPG RPG APG SPG BPG" << endl;
+  for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+    cout << c[0].as<int>() << " ";
+    cout << c[1].as<int>() << " ";
+    cout << c[2].as<int>() << " ";
+    cout << c[3].as<string>() << " ";
+    cout << c[4].as<string>() << " ";
+    cout << c[5].as<int>() << " ";
+    cout << c[6].as<int>() << " ";
+    cout << c[7].as<int>() << " ";
+    cout << c[8].as<int>() << " ";
+    cout << c[9].as<double>() << " ";
+    cout << c[10].as<double>() << endl;
+  }
 }
 
 
 void query2(connection *C, string team_color)
 {
+  work W(*C);
+  string sql;
+  sql = "SELECT TEAM.NAME FROM COLOR, TEAM WHERE TEAM.COLOR_ID = COLOR.COLOR_ID AND COLOR.NAME = ";
+  sql = sql +  W.quote(team_color) + ";";
+  W.commit();
+  nontransaction N(*C);
+  result R(N.exec(sql));
+  cout << "NAME" << endl;
+  for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+    cout << c[0].as<string>() << endl;
+  }
 }
 
 
 void query3(connection *C, string team_name)
 {
+  work W(*C);
+  string sql;
+  sql = "SELECT FIRST_NAME, LAST_NAME FROM PLAYER, TEAM WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID AND TEAM.NAME = ";
+  sql = sql +  W.quote(team_name) + " ORDER BY PPG ASC;";
+  W.commit();
+  nontransaction N(*C);
+  result R(N.exec(sql));
+  cout << "FIRST_NAME LAST_NAME" << endl;
+  for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+    cout << c[0].as<string>() << " "; 
+    cout << c[1].as<string>() << endl;
+  }
 }
 
 
 void query4(connection *C, string team_state, string team_color)
 {
+  work W(*C);
+  string sql;
+  sql = "SELECT FIRST_NAME, LAST_NAME, UNIFORM_NUM FROM PLAYER, STATE, COLOR, TEAM WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID AND TEAM.COLOR_ID = COLOR.COLOR_ID AND TEAM.STATE_ID = STATE.STATE_ID AND COLOR.NAME = ";
+  sql = sql + W.quote(team_color);
+  sql = sql + " AND STATE.NAME = ";
+  sql = sql + W.quote(team_state) + ";";
+  W.commit();
+  nontransaction N(*C);
+  result R(N.exec(sql));
+  cout << "FIRST_NAME LAST_NAME UNIFORM_NUM" << endl;
+  for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+    cout << c[0].as<string>() << " "; 
+    cout << c[1].as<string>() << " ";
+    cout << c[2].as<int>() << endl;
+  }
 }
 
 
 void query5(connection *C, int num_wins)
 {
+  work W(*C);
+  string sql;
+  sql = "SELECT FIRST_NAME, LAST_NAME, NAME, WINS FROM PLAYER, TEAM WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID AND TEAM.WINS >= ";
+  sql = sql + W.quote(num_wins) + ";";
+  W.commit();
+  nontransaction N(*C);
+  result R(N.exec(sql));
+  cout << "FIRST_NAME LAST_NAME NAME WINS" << endl;
+  for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+    cout << c[0].as<string>() << " "; 
+    cout << c[1].as<string>() << " ";
+    cout << c[2].as<string>() << " ";
+    cout << c[3].as<int>() << endl;
+  }
 }
 
 void test_player(connection *C){

@@ -1,0 +1,6 @@
+Opened database successfully: ACC_BBALL
+The adding of all colors are finished!!!
+The adding of all states are finished!!!
+The adding of all teams are finished!!!
+The adding of all players are finished!!!
+Operation done successfully
