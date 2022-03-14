@@ -120,35 +120,35 @@ void query1(connection *C,
   }
   if(use_ppg != 0){
       if(counter != 0){
-          sql = sql + " AND";
+          sql = sql + " AND ";
       }
       sql = sql + "PPG >= " + to_string(min_ppg) + " AND PPG <= " + to_string(max_ppg);
       counter++;
   }
   if(use_rpg != 0){
       if(counter != 0){
-          sql = sql + " AND";
+          sql = sql + " AND ";
       }
       sql = sql + "RPG >= " + to_string(min_rpg) + " AND RPG <= " + to_string(max_rpg);
       counter++;
   }
   if(use_apg != 0){
       if(counter != 0){
-          sql = sql + " AND";
+          sql = sql + " AND ";
       }
       sql = sql + "APG >= " + to_string(min_apg) + " AND APG <= " + to_string(max_apg);
       counter++;
   }
   if(use_spg != 0){
       if(counter != 0){
-          sql = sql + " AND";
+          sql = sql + " AND ";
       }
       sql = sql + "SPG >= " + to_string(min_spg) + " AND SPG <= " + to_string(max_spg);
       counter++;
   }
   if(use_bpg != 0){
       if(counter != 0){
-          sql = sql + " AND";
+          sql = sql + " AND ";
       }
       sql = sql + "BPG >= " + to_string(min_bpg) + " AND BPG <= " + to_string(max_bpg);
       counter++;
@@ -195,7 +195,7 @@ void query3(connection *C, string team_name)
   work W(*C);
   string sql;
   sql = "SELECT FIRST_NAME, LAST_NAME FROM PLAYER, TEAM WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID AND TEAM.NAME = ";
-  sql = sql +  W.quote(team_name) + " ORDER BY PPG ASC;";
+  sql = sql +  W.quote(team_name) + " ORDER BY PPG DESC;";
   W.commit();
   nontransaction N(*C);
   result R(N.exec(sql));
@@ -254,22 +254,22 @@ void test_player(connection *C){
     /* Execute SQL query */
     result R( N.exec( sql ));
       
-    // /* List down all the records */
-    // for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
-    //   cout << "Player_id = " << c[0].as<int>() << endl;
-    //   cout << "Team_id = " << c[1].as<int>() << endl;
-    //   cout << "Uniform_num = " << c[2].as<int>() << endl;
-    //   cout << "First_name = " << c[3].as<string>() << endl;
-    //   cout << "Last_name = " << c[4].as<string>() << endl;
-    //   cout << "MPG = " << c[5].as<int>() << endl;
-    //   cout << "PPG = " << c[6].as<int>() << endl;
-    //   cout << "RPG = " << c[7].as<int>() << endl;
-    //   cout << "APG = " << c[8].as<int>() << endl;
-    //   cout << "SPG = " << c[9].as<float>() << endl;
-    //   cout << "BPG = " << c[10].as<float>() << endl;
-    // //   cout << "Age = " << c[2].as<int>() << endl;
-    // //   cout << "Address = " << c[3].as<string>() << endl;
-    // //   cout << "Salary = " << c[4].as<float>() << endl;
-    // }
+    /* List down all the records */
+    for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+      cout << "Player_id = " << c[0].as<int>() << endl;
+      cout << "Team_id = " << c[1].as<int>() << endl;
+      cout << "Uniform_num = " << c[2].as<int>() << endl;
+      cout << "First_name = " << c[3].as<string>() << endl;
+      cout << "Last_name = " << c[4].as<string>() << endl;
+      cout << "MPG = " << c[5].as<int>() << endl;
+      cout << "PPG = " << c[6].as<int>() << endl;
+      cout << "RPG = " << c[7].as<int>() << endl;
+      cout << "APG = " << c[8].as<int>() << endl;
+      cout << "SPG = " << c[9].as<float>() << endl;
+      cout << "BPG = " << c[10].as<float>() << endl;
+    //   cout << "Age = " << c[2].as<int>() << endl;
+    //   cout << "Address = " << c[3].as<string>() << endl;
+    //   cout << "Salary = " << c[4].as<float>() << endl;
+    }
     cout << "Operation done successfully" << endl;
 }
