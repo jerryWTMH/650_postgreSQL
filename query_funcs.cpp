@@ -153,24 +153,46 @@ void query1(connection *C,
       sql = sql + "BPG >= " + to_string(min_bpg) + " AND BPG <= " + to_string(max_bpg);
       counter++;
   }
-  sql = sql + ";";  
-  W.commit();
-  nontransaction N(*C);
-  result R(N.exec(sql));
-  cout << "PLAYER_ID TEAM_ID UNIFORM_NUM FIRST_NAME LAST_NAME MPG PPG RPG APG SPG BPG" << endl;
-  for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
-    cout << c[0].as<int>() << " ";
-    cout << c[1].as<int>() << " ";
-    cout << c[2].as<int>() << " ";
-    cout << c[3].as<string>() << " ";
-    cout << c[4].as<string>() << " ";
-    cout << c[5].as<int>() << " ";
-    cout << c[6].as<int>() << " ";
-    cout << c[7].as<int>() << " ";
-    cout << c[8].as<int>() << " ";
-    cout << c[9].as<double>() << " ";
-    cout << c[10].as<double>() << endl;
+  if(counter != 0){
+    sql = sql + ";";  
+    W.commit();
+    nontransaction N(*C);
+    result R(N.exec(sql));
+    cout << "PLAYER_ID TEAM_ID UNIFORM_NUM FIRST_NAME LAST_NAME MPG PPG RPG APG SPG BPG" << endl;
+    for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+        cout << c[0].as<int>() << " ";
+        cout << c[1].as<int>() << " ";
+        cout << c[2].as<int>() << " ";
+        cout << c[3].as<string>() << " ";
+        cout << c[4].as<string>() << " ";
+        cout << c[5].as<int>() << " ";
+        cout << c[6].as<int>() << " ";
+        cout << c[7].as<int>() << " ";
+        cout << c[8].as<int>() << " ";
+        cout << c[9].as<double>() << " ";
+        cout << c[10].as<double>() << endl;
+    }
+  } else{
+    sql = "SELECT * FROM PLAYER ";
+    W.commit();
+    nontransaction N(*C);
+    result R(N.exec(sql));
+    cout << "PLAYER_ID TEAM_ID UNIFORM_NUM FIRST_NAME LAST_NAME MPG PPG RPG APG SPG BPG" << endl;
+    for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+        cout << c[0].as<int>() << " ";
+        cout << c[1].as<int>() << " ";
+        cout << c[2].as<int>() << " ";
+        cout << c[3].as<string>() << " ";
+        cout << c[4].as<string>() << " ";
+        cout << c[5].as<int>() << " ";
+        cout << c[6].as<int>() << " ";
+        cout << c[7].as<int>() << " ";
+        cout << c[8].as<int>() << " ";
+        cout << c[9].as<double>() << " ";
+        cout << c[10].as<double>() << endl;
+    }
   }
+  
 }
 
 
