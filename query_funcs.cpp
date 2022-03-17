@@ -2,6 +2,7 @@
 #include <iostream>
 #include <pqxx/pqxx> 
 #include <string.h>
+#include <iomanip>
 using namespace std;
 using namespace pqxx;
 
@@ -169,7 +170,7 @@ void query1(connection *C,
         cout << c[6].as<int>() << " ";
         cout << c[7].as<int>() << " ";
         cout << c[8].as<int>() << " ";
-        cout << c[9].as<double>() << " ";
+        cout << fixed << setprecision(1) << c[9].as<double>() << " ";
         cout << c[10].as<double>() << endl;
     }
   } else{
@@ -188,7 +189,7 @@ void query1(connection *C,
         cout << c[6].as<int>() << " ";
         cout << c[7].as<int>() << " ";
         cout << c[8].as<int>() << " ";
-        cout << c[9].as<double>() << " ";
+        cout << fixed << setprecision(1) << c[9].as<double>() << " ";
         cout << c[10].as<double>() << endl;
     }
   }
@@ -240,11 +241,11 @@ void query4(connection *C, string team_state, string team_color)
   W.commit();
   nontransaction N(*C);
   result R(N.exec(sql));
-  cout << "FIRST_NAME LAST_NAME UNIFORM_NUM" << endl;
+  cout << "UNIFORM_NUM FIRST_NAME LAST_NAME" << endl;
   for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
-    cout << c[0].as<string>() << " "; 
-    cout << c[1].as<string>() << " ";
-    cout << c[2].as<int>() << endl;
+    cout << c[2].as<int>() << " "; 
+    cout << c[0].as<string>() << " ";
+    cout << c[1].as<string>() << endl;
   }
 }
 
@@ -253,7 +254,7 @@ void query5(connection *C, int num_wins)
 {
   work W(*C);
   string sql;
-  sql = "SELECT FIRST_NAME, LAST_NAME, NAME, WINS FROM PLAYER, TEAM WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID AND TEAM.WINS >= ";
+  sql = "SELECT FIRST_NAME, LAST_NAME, NAME, WINS FROM PLAYER, TEAM WHERE PLAYER.TEAM_ID = TEAM.TEAM_ID AND TEAM.WINS > ";
   sql = sql + W.quote(num_wins) + ";";
   W.commit();
   nontransaction N(*C);
